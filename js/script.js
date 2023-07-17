@@ -4,6 +4,32 @@ const titleClickHandler = function(event){
       event.preventDefault();
       const clickedElement = this;
 
+
+         const maxHeight = function getDocHeight()
+      {
+        const articles = document.querySelectorAll('.post.active');
+        console.log(articles);
+          for(let article of articles) {
+
+               const articleHeight = article.offsetHeight;
+               //const articleWidth = article.offsetWidth;
+
+               let max = 0;
+              if(articleHeight > max) {
+                   max = articleHeight;
+                  console.log('max: ', max);
+
+               const maxHeight = max;
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+              const postsHeight = document.querySelector(".posts");
+              console.log('3333333333333' , postsHeight);
+              postsHeight.style.height = maxHeight;
+              console.log('2222222222222222 ' + postsHeight);
+            }
+          }
+      }
+          maxHeight();
+
       /* remove class 'active' from all article links  */
       const activeLinks = document.querySelectorAll('.titles a.active');
       for(let activeLink of activeLinks){
@@ -28,12 +54,14 @@ const titleClickHandler = function(event){
 
       /* add class 'active' to the correct article */
       targetArticle.classList.add('active');
+
 }
+
 const optArticleSelector = '.post',
       optTitleSelector = '.post-title',
       optTitleListSelector = '.titles';
 
-function generateTitleLinks(){
+const generateTitleLinks = function generateTitleLinks(){
 
         /* remove contents of titleList */
         let titleList = document.querySelector(optTitleListSelector);
@@ -53,7 +81,6 @@ function generateTitleLinks(){
 
             /* find the title element  and  get the title from the title element */
             const articleTitle = article.querySelector(optTitleSelector).innerHTML;
-            console.log('!!!!!!!!!!!!!!', articleTitle);
 
             /* create HTML of the link */
             const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
@@ -72,28 +99,3 @@ function generateTitleLinks(){
         };
 }
 generateTitleLinks();
-
-   const maxHeight = function getDocHeight()
-{
-
-    let articles = document.querySelectorAll('article');
-    console.log('panel ', articles);
-
-
-    for(let article of articles) {
-
-    const articleHeight = article.offsetHeight;
-    //const articleWidth = article.offsetWidth;
-
-    let max = 0;
-    if(articleHeight > max) {
-      max = articleHeight;
-      console.log('max: ', max);
-    }
-
-    }
-
-}
-    maxHeight()
-
-
