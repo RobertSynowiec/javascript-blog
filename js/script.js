@@ -53,6 +53,7 @@ function generateTitleLinks(){
 
             /* find the title element  and  get the title from the title element */
             const articleTitle = article.querySelector(optTitleSelector).innerHTML;
+            console.log('!!!!!!!!!!!!!!', articleTitle);
 
             /* create HTML of the link */
             const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
@@ -70,5 +71,29 @@ function generateTitleLinks(){
             link.addEventListener('click', titleClickHandler);
         };
 }
-
 generateTitleLinks();
+
+   const maxHeight = function getDocHeight()
+{
+
+    let articles = document.querySelectorAll('article');
+    console.log('panel ', articles);
+
+
+    for(let article of articles) {
+
+    const articleHeight = article.offsetHeight;
+    //const articleWidth = article.offsetWidth;
+
+    let max = 0;
+    if(articleHeight > max) {
+      max = articleHeight;
+      console.log('max: ', max);
+    }
+
+    }
+
+}
+    maxHeight()
+
+
