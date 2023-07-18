@@ -1,5 +1,6 @@
 'use strict';
 
+
 const titleClickHandler = function(event){
       event.preventDefault();
       const clickedElement = this;
@@ -17,18 +18,17 @@ const titleClickHandler = function(event){
                let max = 0;
               if(articleHeight > max) {
                    max = articleHeight;
-                  console.log('max: ', max);
 
-               const maxHeight = max;
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-              const postsHeight = document.querySelector(".posts");
-              console.log('3333333333333' , postsHeight);
-              postsHeight.style.height = maxHeight;
-              console.log('2222222222222222 ' + postsHeight);
-            }
+
+                  }
+                  console.log('max :' ,max);
+
+
           }
       }
-          maxHeight();
+      maxHeight();
+      console.log(' funcion maxHeight : ', maxHeight);
+
 
       /* remove class 'active' from all article links  */
       const activeLinks = document.querySelectorAll('.titles a.active');
@@ -65,7 +65,6 @@ const generateTitleLinks = function generateTitleLinks(){
 
         /* remove contents of titleList */
         let titleList = document.querySelector(optTitleListSelector);
-        console.log(titleList);
         titleList.innerHTML = '';
 
         /* for each article */
