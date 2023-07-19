@@ -1,10 +1,12 @@
 'use strict';
-const htmlClassWrapper = ".wrapper";
+ const htmlClassWrapper = ".wrapper";
 
 const titleClickHandler = function(event){
   event.preventDefault();
   const clickedElement = this;
+  console.log( 'klikniety artykuł ', clickedElement );
 
+  // start pomiary wysokości po kliknięciu
   const maxHeight = function getDocHeight(){
     const articles = document.querySelectorAll('.post.active');
 
@@ -20,14 +22,13 @@ const titleClickHandler = function(event){
       console.log('max :' ,max);
       const wrapperStyle = document.querySelector(htmlClassWrapper);
       console.log('wrapper class' , wrapperStyle);
-      console.log( 'wrapper styles ', wrapperStyle.style);
+     console.log( 'wrapper styles ', wrapperStyle.style);
       wrapperStyle.style.height = max ;
       console.log('wysokośc po przypisaniu maxa: ' , wrapperStyle.style);
     }
   }
       maxHeight();
-      console.log(' funcion maxHeight : ', maxHeight);
-
+// koniec pomiaru wysokości
 
       /* remove class 'active' from all article links  */
       const activeLinks = document.querySelectorAll('.titles a.active');
@@ -53,6 +54,7 @@ const titleClickHandler = function(event){
 
       /* add class 'active' to the correct article */
       targetArticle.classList.add('active');
+
 }
 //!!!!do poprawy kod wysokości postu!!!!
 const optArticleSelector = '.post',
@@ -134,9 +136,73 @@ const generateTags = function generateTags(){
 
     /* insert HTML of all the links into the tags wrapper */
       tagsWrapper.innerHTML = html;
-      console.log('tags wrapper inner ', tagsWrapper.innerHTML);
+
       /* END LOOP: for every article: */
   }
 }
 generateTags();
+
+ const tagClickHandler = function(event){
+  /* prevent default action for this event */
+  event.preventDefault();
+
+  /* make new constant named "clickedElement" and give it the value of "this" */
+  const clickedElement = this;
+  console.log(' klikniety tag ', clickedElement );
+
+  /* make a new constant "href" and read the attribute "href" of the clicked element */
+
+  const href = clickedElement.getAttribute("href");
+  console.log(href);
+
+
+  /* make a new constant "tag" and extract tag from the "href" constant */
+  const tag = href.replace('#tag-', '');
+
+
+  /* find all tag links with class active */
+  const activeTagslinks = document.querySelectorAll('a.active[href^="#tag-"]');
+
+  /* START LOOP: for each active tag link */
+
+  for( let activeTaglink of activeTagslinks ){
+
+
+    /* remove class active */
+    activeTaglink.classList.remove('acive');
+  }
+
+  /* END LOOP: for each active tag link */
+
+  /* find all tag links with "href" attribute equal to the "href" constant */
+  const allTagLinks = document.querySelectorAll('a[href="' + href + '"]')
+
+  /* START LOOP: for each found tag link */
+  for (let tagLink of allTagLinks){
+
+    /* add class active */
+
+  tagLink.classList.add('active');
+  /* END LOOP: for each found tag link */
+}
+  /* execute function "generateTitleLinks" with article selector as argument */
+  generateTitleLinks('[data-tags~="' + tag + '"]');
+}
+
+
+
+function addClickListenersToTags(){
+  /* find all links to tags */
+  const links = document.querySelectorAll('.post-tags a');
+  /* START LOOP: for each link */
+    for(let link of links){
+
+    /* add tagClickHandler as event listener for that link */
+    link.addEventListener('click', tagClickHandler);
+
+  /* END LOOP: for each link */
+}
+}
+
+addClickListenersToTags();
 
