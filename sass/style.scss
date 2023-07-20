@@ -49,7 +49,7 @@ body {
 .wrapper {
   display: flex;
   margin-left: 10px;
-  height: 10px;
+  height: auto;
 }
 
 .sidebar {
@@ -126,12 +126,15 @@ body {
     opacity: 1;
     top: 0;
 
-
   }
 }
 
 .post-author {
   font-style: italic;
+
+  a{
+  color: #444;
+  }
 }
 
 .post-tags {

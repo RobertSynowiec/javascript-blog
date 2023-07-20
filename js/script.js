@@ -60,7 +60,8 @@ const titleClickHandler = function(event){
 const optArticleSelector = '.post',
       optTitleSelector = '.post-title',
       optTitleListSelector = '.titles',
-      optArticleTagsSelector ='.post-tags .list';
+      optArticleTagsSelector ='.post-tags .list',
+      optArticleAuthorSelector ='.post-author';
 
 const generateTitleLinks = function generateTitleLinks(customSelector = '')
 {
@@ -101,7 +102,7 @@ const generateTitleLinks = function generateTitleLinks(customSelector = '')
 }
 
 generateTitleLinks();
-console.log( 'generateTitleLinks  ', generateTitleLinks);
+
 
 const generateTags = function generateTags(){
   /* find all articles */
@@ -120,6 +121,7 @@ const generateTags = function generateTags(){
 
     /* get tags from data-tags attribute */
     const articleTags = article.getAttribute('data-tags');
+
 
     /* split tags into array */
     const articleTagsArray = articleTags.split(' ');
@@ -210,3 +212,48 @@ function addClickListenersToTags(){
 
 addClickListenersToTags();
 
+/* start add author links*/
+
+const generateAuthors = function generateAuthors(){
+
+  /* find all articles */
+
+  const articles = document.querySelectorAll(optArticleSelector);
+
+  console.log(' all articles: ', articles);
+
+  /* START LOOP: for every article: */
+  for( let article of articles){
+
+  /* find author wrapper */
+
+  const authorWraper = article.querySelector(optArticleAuthorSelector);
+  console.log('wraper author ' ,authorWraper);
+
+  /* make html variable with empty string */
+
+  let html = '';
+  console.log ( 'html : ' , html );
+
+  /* get tags from data-author attribute */
+
+  const articleAuthor = article.getAttribute('data-author');
+  articleAuthor
+  console.log(' article author :', articleAuthor);
+
+
+
+  /* generate HTML of the link */
+
+  const authorHTML = '<a href="#' + articleAuthor  + '"<span>'+ '<strong>Author: </strong>' + ' '  + articleAuthor + '</span></a></li></a> ';
+  console.log( 'author html : ', authorHTML);
+
+  /* add generated code to html variable */
+
+  html = html + authorHTML;
+
+  authorWraper.innerHTML = html;
+  }
+
+}
+generateAuthors();
