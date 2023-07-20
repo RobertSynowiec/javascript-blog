@@ -103,7 +103,6 @@ const generateTitleLinks = function generateTitleLinks(customSelector = '')
 
 generateTitleLinks();
 
-
 const generateTags = function generateTags(){
   /* find all articles */
   const articles = document.querySelectorAll(optArticleSelector);
@@ -290,5 +289,18 @@ for (let authorLink of allAuthorsLinks  ) {
 }
  /* execute function "generateTitleLinks" with article selector as argument */
  generateTitleLinks('[data-author="' + author + '"]');
-
 }
+const addClickListenersToAuthors = function addClickListenersToAuthor(){
+
+  /* find all links to author */
+  const links = document.querySelectorAll('.post-author a');
+  /* START LOOP: for each link */
+  for(let link of links){
+
+      /* add tagClickHandler as event listener for that link */
+      link.addEventListener('click', authorClickHandler);
+
+    /* END LOOP: for each link */
+  }
+}
+addClickListenersToAuthors();
