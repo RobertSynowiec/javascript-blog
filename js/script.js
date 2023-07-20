@@ -105,7 +105,18 @@ const generateTitleLinks = function generateTitleLinks(customSelector = '')
 
 generateTitleLinks();
 
+
+
+
+
+
+
+
+
+
 /* START tabs links*/
+
+
 
 const generateTags = function generateTags(){
 
@@ -168,8 +179,31 @@ const generateTags = function generateTags(){
       //stagList.innerHTML = allTags.join(' ');
 
 
+
+      function calculateTagsParams(tags){
+
+      const params = { max: 0, min: 999999 };
+
+      for (let tag in tags) {
+
+
+        if( tags[tag] > params.max ){
+          params.max = tags[tag];
+          console.log(tags);
+        }
+        else if( tags[tag] < params.min ){
+          params.min = tags[tag];
+        }
+      }
+      return params;
+    }
+
+    const tagsParams = calculateTagsParams(allTags);
+    console.log('tagsParams:', tagsParams)
       /* [NEW] create variable for all links HTML code */
-      let allTagsHTML = '';
+
+    let allTagsHTML = '';
+
 
      /* [NEW] START LOOP: for each tag in allTags: */
     for(let tag in allTags){
@@ -178,7 +212,7 @@ const generateTags = function generateTags(){
 
      //allTagsHTML += tag + ' (' + allTags[tag] + ') ';
      const TagsHTML = '<li><a href="#' + tag + '" (' + '  ' + allTags[tag] + ') </a><span>'+ tag + '  ' + '(' + allTags[tag] + ')' + '</span></li>';
-     console.log(allTagsHTML);
+
 
      allTagsHTML = allTagsHTML + TagsHTML;
     }
@@ -187,12 +221,19 @@ const generateTags = function generateTags(){
     /*[NEW] add HTML from allTagsHTML to tagList */
   tagList.innerHTML = allTagsHTML;
 
-    console.log('!!!!!!!!!!!!!' , allTags);
-
-      /* END LOOP: for every article: */
+    /* END LOOP: for every article: */
     }
 }
 generateTags();
+
+
+
+
+
+
+
+
+//calculateTagsParams();
 
 const tagClickHandler = function(event){
   /* prevent default action for this event */
