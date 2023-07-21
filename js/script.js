@@ -62,8 +62,9 @@ const optArticleSelector = '.post',
       optTitleListSelector = '.titles',
       optArticleTagsSelector = '.post-tags .list', /* used tag links */
       optArticleAuthorSelector = '.post-author', /* used author links */
-      optTagsListSelector = '.tags.list '; /* used tag cloud*/
-      console.log(optArticleTagsSelector);
+      optTagsListSelector = '.tags.list ', /* used tag cloud*/
+      optCloudClassCount = 5,
+      optCloudClassPrefix = 'tag-size-';
 
 const generateTitleLinks = function generateTitleLinks(customSelector = '')
 {
@@ -106,17 +107,45 @@ const generateTitleLinks = function generateTitleLinks(customSelector = '')
 generateTitleLinks();
 
 
+/* Start calculateTagsParams ( function generateTags in function generateTags ) */
 
 
+const calculateTagsParams = function calculateTagsParams(tags){
+
+  const params = { max: 0, min: 999999 };
+
+  for (let tag in tags) {
 
 
+    if( tags[tag] > params.max ){
+      params.max = tags[tag];
+    }
+    else if( tags[tag] < params.min ){
+      params.min = tags[tag];
+    }
+  }
+  return params;
+}
+/* end calculateTagsParams ( function generateTags in function generateTags ) */
 
+/* Start selecting a class for the tag ( function generateTags in function generateTags ) */
 
+ function calculateTagClass (count, params){
+
+  const normalizedCount = count - params.min;
+  const normalizedMax = params.max - params.min;
+  const percentage = normalizedCount / normalizedMax;
+  const classNumber = Math.floor( percentage * (optCloudClassCount - 1) + 1 );
+  //console.log( 'classNumber ', classNumber);
+  return optCloudClassPrefix + classNumber
+}
+//calculateTagClass ();
+//console.log('calculateTagClass', calculateTagClass (allTags[tag], tagsParams));
+
+/* End selecting a class for the tag*/
 
 
 /* START tabs links*/
-
-
 
 const generateTags = function generateTags(){
 
@@ -180,26 +209,13 @@ const generateTags = function generateTags(){
 
 
 
-      function calculateTagsParams(tags){
-
-      const params = { max: 0, min: 999999 };
-
-      for (let tag in tags) {
-
-
-        if( tags[tag] > params.max ){
-          params.max = tags[tag];
-          console.log(tags);
-        }
-        else if( tags[tag] < params.min ){
-          params.min = tags[tag];
-        }
-      }
-      return params;
-    }
+/* Start -  function call calculateTagsParams */
 
     const tagsParams = calculateTagsParams(allTags);
-    console.log('tagsParams:', tagsParams)
+    //console.log('tagsParam:', tagsParams)
+
+/* End call function calculateTagsParams*/
+
       /* [NEW] create variable for all links HTML code */
 
     let allTagsHTML = '';
@@ -208,32 +224,26 @@ const generateTags = function generateTags(){
      /* [NEW] START LOOP: for each tag in allTags: */
     for(let tag in allTags){
 
-     /* [NEW] generate code of a link and add it to allTagsHTML */
 
-     //allTagsHTML += tag + ' (' + allTags[tag] + ') ';
-     const TagsHTML = '<li><a href="#' + tag + '" (' + '  ' + allTags[tag] + ') </a><span>'+ tag + '  ' + '(' + allTags[tag] + ')' + '</span></li>';
+      const tagLinkHTML = `<li><a class="${calculateTagClass(
+				allTags[tag],
+				tagsParams
+			)}" href="#tag-${tag}">${tag}</a></li>`;
+			console.log('tagLinkHTML:', tagLinkHTML);
 
+			allTagsHTML += tagLinkHTML;
+			/* [NEW] END LOOP: for each tag in allTags: */
+		}
+		/*[NEW] add HTML from allTagsHTML to tagList */
+		tagList.innerHTML = allTagsHTML;
+	};
 
-     allTagsHTML = allTagsHTML + TagsHTML;
     }
-    /* [NEW] END LOOP: for each tag in allTags: */
 
-    /*[NEW] add HTML from allTagsHTML to tagList */
-  tagList.innerHTML = allTagsHTML;
-
-    /* END LOOP: for every article: */
-    }
-}
 generateTags();
 
 
 
-
-
-
-
-
-//calculateTagsParams();
 
 const tagClickHandler = function(event){
   /* prevent default action for this event */
@@ -241,12 +251,10 @@ const tagClickHandler = function(event){
 
   /* make new constant named "clickedElement" and give it the value of "this" */
   const clickedElement = this;
-  console.log(' klikniety tag ', clickedElement );
 
   /* make a new constant "href" and read the attribute "href" of the clicked element */
 
   const href = clickedElement.getAttribute("href");
-  console.log(href);
 
 
   /* make a new constant "tag" and extract tag from the "href" constant */

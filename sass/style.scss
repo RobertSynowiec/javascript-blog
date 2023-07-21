@@ -137,9 +137,43 @@ body {
   }
 }
 
+.tags {
+  display: flex;
+  flex-direction: row;
+    li{
+      padding-left: 20px;
+    }
+}
+
 .post-tags {
   display: flex;
   p {
     margin: 0 10px 0 0;
   }
 }
+.tag-size-1 {
+  font-size: 22px;
+  color: blue;
+}
+
+.tag-size-2 {
+  font-size: 28px;
+  color: blueviolet;
+}
+.tag-size-3 {
+  font-size: 34px;
+  color: yellow;
+  font-weight: bolder;
+}
+.tag-size-4 {
+  font-size: 40px;
+  color: pink;
+  font-weight: bolder;
+}
+.tag-size-5 {
+  font-size: 34px;
+  color: green;
+  font-weight: bolder;
+}
+
+
