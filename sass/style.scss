@@ -140,6 +140,7 @@ body {
 .tags {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
     li{
       padding-left: 20px;
     }
