@@ -65,7 +65,7 @@ const optArticleSelector = '.post',
       optTagsListSelector = '.tags.list ', /* used tag cloud*/
       optCloudClassCount = 5,
       optCloudClassPrefix = 'tag-size-',
-      optAuthorsListSelector = '.sidebar .authors' /* used author links */;
+      optAuthorsListSelector = '.authors.list' /* used author links */;
       console.log('.authors.list', optAuthorsListSelector);
 
 const generateTitleLinks = function generateTitleLinks(customSelector = '')
@@ -213,6 +213,7 @@ const generateTags = function generateTags(){
       /* [NEW] find list of tags in right column */
       const tagList = document.querySelector(optTagsListSelector);
 
+
       /* [NEW] add html from allTags to tagList */
       //stagList.innerHTML = allTags.join(' ');
 
@@ -323,80 +324,65 @@ addClickListenersToTags();
 
 
 
-
-
-
 const generateAuthors = function generateAuthors(){
 
- /* [NEW] create a new variable allTags with an empty object */
- let allAuthors = [];
 
-  /* find all articles */
+ /* [NEW] create a new variable allAuthors with an empty object */
+ let allAuthors = {};
+
+
 
   const articles = document.querySelectorAll(optArticleSelector);
 
-  /* START LOOP: for every article: */
+
   for( let article of articles){
 
-  /* find author wrapper */
 
-  let authorsWraper = article.querySelector(optArticleAuthorSelector);
-  //console.log('authorWraper', authorWraper);
-  authorsWraper.innerHTML = "";
 
-  /* make html variable with empty string */
+  let authorsWrapper = article.querySelector(optArticleAuthorSelector);
+
+  authorsWrapper.innerHTML = "";
 
   let html = '';
 
-  /* get tags from data-author attribute */
 
-  const articleAuthor = article.getAttribute('data-author');
-  //console.log( 'articleAuthor ', articleAuthor );
+  const author = article.getAttribute('data-author');
 
 
-  /* generate HTML of the link */
+  const linkHTML = '<li><a href="#author-' + author + '"<span>' + ' '  + author + '</span></a></li>';
 
-  const authorHTML = '<li><a href="#author-' + articleAuthor + '"<span>' + ' '  + articleAuthor+ '</span></a></li>';
-  //console.log ( ' author link: ', authorHTML);
-
-  /* add generated code to html variable */
-
-  html = html + authorHTML;
-
-  //console.log('html author ', html);
-
-/* [NEW] check if this link is NOT already in allTags */
-if(allAuthors.indexOf(authorHTML) == -1){
-  /* [NEW] add generated code to allTags array */
-  allAuthors.push(authorHTML);
-}
+  html = html + linkHTML;
 
 
+  if(!allAuthors[author]){
 
-   /* insert HTML of all the links into the author wrapper */
+    allAuthors[author] = 1;
+  } else {
+    allAuthors[author]++;
+ }
 
 
+  authorsWrapper.innerHTML = html;
+  }
   const authorList = document.querySelector(optAuthorsListSelector);
-  console.log('author list', authorList);
-  authorList.innerHTML = allAuthors.join(' ');
-  authorsWraper.innerHTML = allAuthors.join(' ');
 
+
+let allAuthorsHTML = '';
+
+
+for(let author in allAuthors){
+
+  const linkHTML = '<li><a href="#author-' + author + '"<span>' + ' '  + author + '</span></a>  (' + allAuthors[author] + ') </li>';
+
+  allAuthorsHTML += linkHTML ;
+  console.log(allAuthorsHTML);
+}
+  authorList.innerHTML = allAuthorsHTML;
 
   }
 
-}
 
 generateAuthors();
-
-
-
-
-
-
-
-
-
-
 
 
 

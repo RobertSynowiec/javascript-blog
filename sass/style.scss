@@ -16,6 +16,12 @@ $font-text: 'Source Sans Pro', sans-serif;
 }
 a {
   text-decoration: none;
+  color: black;
+}
+li {
+  list-style: none;
+  font-weight: 200;
+
 }
 
 body {
@@ -134,6 +140,8 @@ body {
 
   a{
   color: #444;
+  text-decoration: none;
+
   }
 }
 
