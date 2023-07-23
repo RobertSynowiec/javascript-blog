@@ -1,4 +1,12 @@
 'use strict';
+const templates = {
+  articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML)
+};
+
+
+//template Handlebarsnpm run watch
+
+
 {
   const htmlClassWrapper = '.wrapper';
 
@@ -91,8 +99,9 @@
       /* find the title element  and  get the title from the title element */
       const articleTitle = article.querySelector(optTitleSelector).innerHTML;
 
-      /* create HTML of the link */
-      const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
+      /* create HTML of the link with Handlebars*/
+      const linkHTMLData = {id: articleId, title: articleTitle};
+      const linkHTML = templates.articleLink(linkHTMLData);
 
       /* insert link into titleList */
 
@@ -167,15 +176,24 @@
       /* get tags from data-tags attribute */
       const articleTags = article.getAttribute('data-tags');
 
+
       /* split tags into array */
       const articleTagsArray = articleTags.split(' ');
+
+
 
       /* START LOOP: for each tag */
       for(let tag of articleTagsArray){
 
-        /* generate HTML of the link */
 
-        const linkHTML = '<li><a href="#tag-' + tag  + '"><span>' + tag + '</span></a></li> ';
+        /* generate HTML of the link with handlebars  */
+        const linkHTMLData = {id: 'tag-' + tag , title: tag};
+        console.log('linkHTMLData  ', linkHTMLData );
+
+        const linkHTML = templates.articleLink(linkHTMLData);
+
+
+        //const linkHTML = '<li><a href="#tag-' + tag  + '"><span>' + tag + '</span></a></li> ';
 
         /* add generated code to html variable */
 
@@ -312,7 +330,13 @@
       const author = article.getAttribute('data-author');
 
       /* generate HTML of the link */
-      const linkHTML = '<li><a href="#author-' + author + '"<span>' + ' '  + author + '</span></a></li>';
+
+      const linkHTMLData = {id: 'author-' + author, title: author};
+      const linkHTML = templates.articleLink(linkHTMLData);
+      console.log('linkHTML !!!!', linkHTML);
+
+
+      //const linkHTML = '<li><a href="#author-' + author + '"<span>' + ' '  + author + '</span></a></li>';
 
       /* add generated code to html variable */
       html = html + linkHTML;
